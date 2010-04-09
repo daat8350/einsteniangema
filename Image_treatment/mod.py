@@ -3,7 +3,7 @@ import matplotlib.image as mpimg
 import numpy
 from pylab import show, savefig
 
-from random import random
+#from random import random
 
     
 img=mpimg.imread('stinkbug.png')
