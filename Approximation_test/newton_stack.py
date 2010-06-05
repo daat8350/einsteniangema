@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from numpy import array, dot, linalg
 from pylab import show, savefig
-from math import sqrt, sin, cos, atan
+from math import sqrt, sin, cos, atan, pi
 from time import time
 import create
 import psyco
@@ -14,7 +14,10 @@ def raytrace(x0, v, mass):
     f=array([0.,0.,0.])
     for point in mass:
         r=array(point[0]-x0)
-        a=atan(float(r[1])/r[0])
+        if r[0]!=0: a=atan(float(r[1])/r[0])
+        else:
+            if r[1]>0: a=pi/2
+            else: a=1.5*pi
         u=array([cos(a), sin(a), 0])
         r2=mag2(r)
         M=float(point[1])
@@ -52,7 +55,7 @@ names=('board', 'twoholes')
 
 for i in (0,1):
     # Setup:
-    log=open('archive.txt', 'a')
+    log=open('log.txt', 'a')
     lens=lenses[i]
     img=mpimg.imread(images[i])
     name=names[i]
