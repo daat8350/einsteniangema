@@ -11,42 +11,44 @@ import create
 import psyco
 
 def raytrace(x0, v, mass):
-    f=array([0,0,0])
+    f=array([0.,0.,0.])
     for point in mass:
-        r=array([x0[0]-point[0][0], x0[1]-point[0][1], x0[2]-point[0][2]])
+        r=array(point[0]-x0)
+        u=norm(r)
         r2=mag2(r)
-        M=point[1]
+        M=float(point[1])
         fi=M/r2
-        f+=mag(r)*fi
+        f+=fi*u
+        
     f*=G
     v+=f*dt
-    v[2]=0
-    x0+=v*dt
+    v[2]=zp0                        #Global variable. Default velocity.
+    x0+=v*dt 
     return x0, v
 
 def mag2(vec):
-    return dot(vec,vec)
+    return float(dot(vec,vec))
 
 def mag(vec):
-    return linalg.norm(vec)
+    return float(linalg.norm(vec))
+
+def norm(vec):
+    return vec/mag(vec)
 
 def read(x0, pic):                   #Eats an array and returns the correspondient pixel
     x=round(x0[0])
     y=round(x0[1])
-    if x<0 or y<0: return (1,0,0)
-    elif x>m or y>n:
-        #print x, y
-        return (0,1,0)
-        
+    if x<0: return (0,0,1)
+    elif y<0: return (1,0,0)
+    elif x>=m: return (0,1,0)
+    elif y>=n: return (1,0,1)
     else: return pic[x][y]
 
 
-
-
 # Setup:
-img=mpimg.imread('gal.png')
-#plt.imshow(img)
-#plt.draw()
+#img=mpimg.imread('gal.png')
+img=mpimg.imread('galaxy.png')
+
 
 m=len(img)
 n=len(img[0])
@@ -54,10 +56,11 @@ n=len(img[0])
 imgf=create.white(m, n)
 
 # Parameters:
-G=50                                # Newton constant, in some units. Probably.
-lens=(((60,80,10),10),((80,100,20),20)) # Just playing with the numbers, not carefully chosen.
-dt=2
-maxit=5                             # Fast test
+G=50.                                    # Newton constant, in some units. Probably.
+zp0=1
+lens=(((60,80,10),10),((80,100,20),20))  # Just playing with the numbers, not carefully chosen.
+dt=0.02
+maxit=30                                 # Fast test
 
 #Iterating:
 psyco.full()
@@ -69,7 +72,7 @@ for x in range(m):
     for y in range(n):
         z=0
         pos=array([x,y,z])
-        vel=(0, 0, 1)
+        vel=(0, 0, zp0)
         
         for it in range(maxit):
             pos, vel=raytrace(pos,vel,lens)
@@ -81,15 +84,3 @@ print 'finish', str(time()-t0)
 
 plt.imshow(imgf)
 show()
-#savefig('imgf.png')
-
-#raw_input('Ready to substract? ')
-
-##imgdiff=create.white(m, n)
-##for x in range(m):
-##    for y in range(n):
-##        imgdiff[x][y]=abs(imgf[x][y]-img[x][y])
-##
-##plt.imshow(imgdiff)
-##show()
-###savefig('imgdiff.png')

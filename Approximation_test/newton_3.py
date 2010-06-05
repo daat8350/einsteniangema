@@ -46,9 +46,9 @@ def read(x0, pic):                   #Eats an array and returns the correspondie
 
 
 # Setup:
-img=mpimg.imread('gal.bmp')
-#plt.imshow(img)
-#plt.draw()
+#img=mpimg.imread('gal.png')
+img=mpimg.imread('galaxy.png')
+
 
 m=len(img)
 n=len(img[0])
@@ -58,12 +58,13 @@ imgf=create.white(m, n)
 # Parameters:
 G=50.                                # Newton constant, in some units. Probably.
 zp0=1
-lens=[((60,80,2),2000)] # Just playing with the numbers, not carefully chosen.
+lens=[((250,300,2),2000)]            # Just playing with the numbers, not carefully chosen.
 dt=0.02
 maxit=30                             # Fast test
 
 #Iterating:
 psyco.full()
+name=raw_input("filename: ")
 
 print 'start'
 t0=time()
@@ -83,16 +84,7 @@ for x in range(m):
 print 'finish', str(time()-t0)
 
 plt.imshow(imgf)
+
+if name!="0": savefig(name+".png")
 show()
-#savefig('imgf.png')
 
-#raw_input('Ready to substract? ')
-
-##imgdiff=create.white(m, n)
-##for x in range(m):
-##    for y in range(n):
-##        imgdiff[x][y]=abs(imgf[x][y]-img[x][y])
-##
-##plt.imshow(imgdiff)
-##show()
-###savefig('imgdiff.png')
