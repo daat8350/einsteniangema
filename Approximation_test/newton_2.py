@@ -44,7 +44,9 @@ def read(x0, pic):                   #Eats an array and returns the correspondie
 
 
 # Setup:
-img=mpimg.imread('chess.png')
+img=mpimg.imread('gal.png')
+#plt.imshow(img)
+#plt.draw()
 
 m=len(img)
 n=len(img[0])
@@ -53,9 +55,9 @@ imgf=create.white(m, n)
 
 # Parameters:
 G=50                                # Newton constant, in some units. Probably.
-lens=(((1,2,3),1),((2,2,4),2))      # Just playing with the numbers, not carefully chosen.
-dt=1
-maxit=2                             # Fast test
+lens=(((60,80,10),10),((80,100,20),20)) # Just playing with the numbers, not carefully chosen.
+dt=2
+maxit=5                             # Fast test
 
 #Iterating:
 psyco.full()
@@ -79,15 +81,15 @@ print 'finish', str(time()-t0)
 
 plt.imshow(imgf)
 show()
-savefig('imgf.png')
+#savefig('imgf.png')
 
-raw_input('Ready to substract? ')
+#raw_input('Ready to substract? ')
 
-imgdiff=create.white(m, n)
-for x in range(m):
-    for y in range(n):
-        imgdiff[x][y]=abs(imgf[x][y]-img[x][y])
-
-plt.imshow(imgdiff)
-show()
-savefig('imgdiff.png')
+##imgdiff=create.white(m, n)
+##for x in range(m):
+##    for y in range(n):
+##        imgdiff[x][y]=abs(imgf[x][y]-img[x][y])
+##
+##plt.imshow(imgdiff)
+##show()
+###savefig('imgdiff.png')
