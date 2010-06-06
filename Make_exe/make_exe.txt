@@ -1,0 +1,1 @@
+Files needed to create binaries with py2exe. The images should be added after.
