@@ -8,6 +8,8 @@ import matplotlib
 setup(
     console=['newton_3.py'],
     name='newton_3.py',
+    author='David Menendez Hurtado',
+    website='http://code.google.com/p/einsteniangema/',
     options={
              'py2exe': {
                         "dll_excludes": [
@@ -17,7 +19,14 @@ setup(
                         "libgobject-2.0-0.dll","libgthread-2.0-0.dll",
                         "libgtk-win32-2.0-0.dll","libpango-1.0-0.dll",
                         "libpangowin32-1.0-0.dll"],
-                        'packages' : ['matplotlib', 'pytz'],
+                        "packages" : ['matplotlib', 'pytz'],
+                        "ascii" : True,
+                        "excludes" : ["doctest", "pdb", "difflib"]
+##                                      "Tkinter", "pydoc",
+##                                      "posixpath", "pickle", "ftplib", "BaseHTTPServer",
+##                                      "email", "zipfile",
+##                                      "tarfile",
+##                                      "symtable", "sets"] 
                        }
             },
     data_files=matplotlib.get_py2exe_datafiles()
