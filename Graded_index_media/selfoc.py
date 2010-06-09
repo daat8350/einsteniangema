@@ -1,5 +1,7 @@
 import numpy
 from visual import *
+##try:from visual import *
+##except:pass    
 import psyco
 #import povexport
 
