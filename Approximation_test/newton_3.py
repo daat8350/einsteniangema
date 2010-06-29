@@ -47,7 +47,7 @@ def read(x0, pic):                   #Eats an array and returns the correspondie
 
 # Setup:
 #img=mpimg.imread('gal.png')
-img=mpimg.imread('galaxy.png')
+img=mpimg.imread('gal.png')
 
 
 m=len(img)
@@ -83,7 +83,9 @@ for x in range(m):
 
 print 'finish', str(time()-t0)
 
-plt.imshow(imgf)
+plt.imshow(imgf).set_interpolation('nearest')
+#imgplot.set_interpolation('nearest')
+
 
 if name!="0": savefig(name+".png")
 show()
