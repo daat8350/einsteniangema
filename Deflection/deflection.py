@@ -37,6 +37,8 @@ def dist(a,b):
 
 
 # Setup:
+psyco.full()
+
 img=mpimg.imread('gal.png')
 
 m=len(img)
@@ -48,7 +50,8 @@ imgf=create.white(m, n)
 # Parameters:
 
 
-lenses=[[1,[70, 75]]]  # [Schwarchild radius, (vector position, R^2)]
+lenses=[[5,[70, 75]]]   # [Schwarchild radius, (vector position, R^2)]
+distance=1                 # Distance from 
 bes=[]
 
 #Iterating:
@@ -56,11 +59,18 @@ for i in range(m):
     for j in range (n):
         for lens in lenses:
             b=dist([i,j],lens[1])
-            if b<lens[0]: bes.append(0.01)  # Return black.
-            else: bes.append(1/b)
+            if b<lens[0]:
+                imgf[i][j]=(1,1,0)  # Ray eaten.
+            else:
+                a=lens[0]/b
+                bes.append(a)
+                vdir=norm(array(lens[1])-array([i, j]))                      #Director vector.
+                ob=array([i,j])+a*distance*vdir
+                #print vdir,a, ob
+                imgf[i][j]=read(ob,img)
 
 print max(bes)
 print min(bes)
 
 # Results
-#plt.imshow(imgf).set_interpolation('nearest')
+plt.imshow(imgf).set_interpolation('nearest')
