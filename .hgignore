@@ -1,1 +1,5 @@
 glob:Deflection/create.pyc
+glob:Approximation_test/create.pyc
+
+syntax: glob
+*.pyc
