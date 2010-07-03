@@ -19,52 +19,14 @@ def mag(vec):
 def norm(vec):
     return vec/mag(vec)
 
-def read(x, y, pic):                   #Eats two coordinates and returns the correspondient pixel
+def read(x0, pic):                   #Eats an array and returns the correspondient pixel
+    x=round(x0[0])
+    y=round(x0[1])
     if x<0: return (0,0,1)
     elif y<0: return (1,0,0)
     elif x>=m: return (0,1,0)
     elif y>=n: return (1,0,1)
     else: return pic[x][y]
-
-def bilinear(x0, pic):
-    x1=x0[0] #x
-    x2=x0[1] #y
-    x10=int(x1)
-    x11=x10+1
-    x20=int(x2)
-    x21=x20+1
-
-    t=(x1-x10)/(x11-x10)
-    u=(x2-x20)/(x21-x20)
-    
-    #RED
-    y1=read(x10, x20,pic)[0]
-    y2=read(x11, x20,pic)[0]
-    y3=read(x11, x21,pic)[0]
-    y4=read(x10, x21,pic)[0]
-
-    yred=(1-t)*(1-u)*y1+t+(1-u)*y2+t*u*y3+(1-t)*u*y4
-
-    #GREEN
-    y1=read(x10, x20,pic)[1]
-    y2=read(x11, x20,pic)[1]
-    y3=read(x11, x21,pic)[1]
-    y4=read(x10, x21,pic)[1]
-
-    ygreen=(1-t)*(1-u)*y1+t+(1-u)*y2+t*u*y3+(1-t)*u*y4
-
-    #BLUE
-    y1=read(x10, x20,pic)[2]
-    y2=read(x11, x20,pic)[2]
-    y3=read(x11, x21,pic)[2]
-    y4=read(x10, x21,pic)[2]
-
-    yblue=(1-t)*(1-u)*y1+t+(1-u)*y2+t*u*y3+(1-t)*u*y4
-
-    return [yred, ygreen, yblue]
-
-
-    
 
 def dist(a,b):
 #    if len(a)!=len(b): raise 'TypeError: should be list of the same length'     #We can assume that, for the shake of perfomance.
@@ -88,8 +50,8 @@ imgf=create.white(m, n)
 # Parameters:
 
 
-lenses=[[20,[301,314]]]   # [Schwarchild radius, (vector position, R^2)]
-distance=300                 # Distance from 
+lenses=[[2,[301,314]]]   # [Schwarchild radius, (vector position, R^2)]
+distance=3000                 # Distance from 
 bes=[]
 
 #Iterating:
@@ -111,15 +73,11 @@ for i in xrange(m):
                 vdir=norm(array(lens[1])-array([i, j]))                      #Director vector.
                 ob+=a*distance*vdir
                 #print vdir,a, ob
-        if readable==True: imgf[i][j]=bilinear(ob,img)
+        if readable==True: imgf[i][j]=read(ob,img)
 
 
 
 # Results
-print max(bes)
-print min(bes)
-print
-print
 
 plt.imshow(imgf).set_interpolation('nearest')
 print time()-t0
