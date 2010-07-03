@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from numpy import array, dot, linalg
 from pylab import show, savefig
-from math import sqrt
+from math import sqrt, tan, asin
 from time import time
 import create
 import psyco
@@ -38,8 +38,8 @@ def dist(a,b):
 
 # Setup:
 psyco.full()
-
-img=mpimg.imread('gal.png')
+t0=time()
+img=mpimg.imread('galaxy.png')
 
 m=len(img)
 n=len(img[0])
@@ -50,27 +50,40 @@ imgf=create.white(m, n)
 # Parameters:
 
 
-lenses=[[5,[70, 75]]]   # [Schwarchild radius, (vector position, R^2)]
-distance=1                 # Distance from 
+lenses=[[20,[301,314]]]   # [Schwarchild radius, (vector position, R^2)]
+distance=100                 # Distance from 
 bes=[]
 
 #Iterating:
-for i in range(m):
-    for j in range (n):
+for i in xrange(m):
+    for j in xrange (n):
+        ob=array([i,j])
+        readable=True
         for lens in lenses:
             b=dist([i,j],lens[1])
-            if b<lens[0]:
+            if b<=lens[0]:
                 imgf[i][j]=(1,1,0)  # Ray eaten.
+                readable=False
+                break
             else:
-                a=lens[0]/b
+                sa=lens[0]/b
+                a=tan(asin(sa))
+#                a=sa/sqrt(1-sa**2)
                 bes.append(a)
                 vdir=norm(array(lens[1])-array([i, j]))                      #Director vector.
-                ob=array([i,j])+a*distance*vdir
+                ob+=a*distance*vdir
                 #print vdir,a, ob
-                imgf[i][j]=read(ob,img)
+        if readable==True: imgf[i][j]=read(ob,img)
 
-print max(bes)
-print min(bes)
+
 
 # Results
+print max(bes)
+print min(bes)
+print
+print
+
 plt.imshow(imgf).set_interpolation('nearest')
+print time()-t0
+
+show()
