@@ -3,3 +3,5 @@ glob:Approximation_test/create.pyc
 
 syntax: glob
 *.pyc
+glob:Deflection/hist.txt
+glob:Deflection/a.txt
