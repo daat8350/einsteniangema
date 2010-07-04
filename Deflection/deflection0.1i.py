@@ -53,6 +53,7 @@ def importer(filename):
     return lenses
 
 # Setup:
+print "Setting up"
 psyco.full()
 t0=time()
 img=mpimg.imread('galaxy.png')
@@ -70,12 +71,13 @@ imgf=create.white(m, n)
 lenses=importer('a.txt')
 
 
-distance=300                 # Distance from 
-bes=[]
+distance=30                 # Distance from 
 
 #Iterating:
-for i in xrange(m):
-    for j in xrange (n):
+
+print "Starting"
+for i in xrange(m):           # m
+    for j in xrange (n):      # n
         ob=array([i,j])
         readable=True
         for lens in lenses:
@@ -88,7 +90,6 @@ for i in xrange(m):
                 sa=lens[0]/b
                 a=tan(asin(sa))
 #                a=sa/sqrt(1-sa**2)
-                bes.append(a)
                 vdir=norm(array(lens[1])-array([i, j]))                      #Director vector.
                 ob+=a*distance*vdir
                 #print vdir,a, ob
@@ -97,8 +98,8 @@ for i in xrange(m):
 
 
 # Results
-
-plt.imshow(imgf).set_interpolation('nearest')
+print "Finished"
 print time()-t0
-
+plt.imshow(imgf).set_interpolation('nearest')
+savefig(str(time())+'.png')
 show()
