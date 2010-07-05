@@ -1,4 +1,5 @@
 ## Creates an image of m x n pixels white, black, or of a plain color.
+#Version 1.0
 
 from numpy import array, reshape, zeros, ones
 
