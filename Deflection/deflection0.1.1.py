@@ -99,14 +99,18 @@ for i in xrange(1,m-1):
         b=imgp[i-1][j+1]
         c=imgp[i+1][j+1]
         d=imgp[i+1][j-1]
-        area2=abs((a[0]*b[1]-b[0]*a[1])*(b[0]*c[1]-c[0]*b[1])*(c[0]*d[1]-d[0]*c[1])*(d[0]*a[1]-a[0]*a[1]))
+        ac=c-a
+        bd=d-b
+        area2=abs(ac[0]*bd[1]-ac[1]*bd[0])
         luminance[i,j]=area2/8.0
 
+t2=time()
 
 # Results
 
-plt.imshow(imgf).set_interpolation('nearest')
-print time()-t0
-print time()-t1
+plt.imshow(luminance).set_interpolation('nearest')
+print 'Total time:', time()-t0, 's'
+print t1-t0, 's distorsing the image.'
+print t2-t1, 's on luminance.'
 
 #show() 
