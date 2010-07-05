@@ -2,14 +2,14 @@ from random import normalvariate
 
 
 lenses=[]
-radius=1
+radius=0.1
 
 m=100
 n=100
-top=1000
+top=100
 
 while len(lenses)<top:
-    newpos=[normalvariate(250, m/2), normalvariate(200, m/2)]
+    newpos=[normalvariate(250, m/4), normalvariate(200, m/4)]
     lenses.append([radius, newpos])
 
 #print lenses
@@ -25,3 +25,5 @@ for i in lenses:
     archive.write('\r\n')
 
 archive.close()
+
+print "Done"

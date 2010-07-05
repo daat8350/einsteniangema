@@ -71,13 +71,13 @@ imgf=create.white(m, n)
 lenses=importer('a.txt')
 
 
-distance=30                 # Distance from 
+distance=1                 # Distance from 
 
 #Iterating:
 
 print "Starting"
-for i in xrange(m):           # m
-    for j in xrange (n):      # n
+for i in xrange(m):           # m, y
+    for j in xrange (n):      # n, x
         ob=array([i,j])
         readable=True
         for lens in lenses:
