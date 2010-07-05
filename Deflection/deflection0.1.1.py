@@ -52,6 +52,9 @@ def raytrace(obj0):
                 obj+=a*distance*vdir
         if readable==True: return obj, True
 
+
+
+
 # Setup:
 psyco.full()
 t0=time()
@@ -61,6 +64,7 @@ m=len(img)
 n=len(img[0])
 
 imgf=create.white(m, n)
+imgp=create.bi_container(m, n)     # Paralel, data container. Useful for luminance.
 
 
 
@@ -82,6 +86,8 @@ for i in xrange(m):
              imgf[i][j]=read(pos, img)
         else:  imgf[i][j]=(1,1,0)
 
+        imgp[i][j]=pos
+
 
 
 # Results
@@ -89,4 +95,4 @@ for i in xrange(m):
 plt.imshow(imgf).set_interpolation('nearest')
 print time()-t0
 
-#show()
+#show() 
