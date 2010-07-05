@@ -1,4 +1,5 @@
 ## Creates an image of m x n pixels white, black, or of a plain color.
+#Version 1.1
 
 from numpy import array, reshape, zeros, ones
 
@@ -37,3 +38,9 @@ def color(m, n, col):
         for j in xrange(m):
             img[j][i]*=col
     return img
+
+def bi_container(m, n):
+    if type(m) in [int, float] and type(n) in [int, float]:
+        if int(m)==m and m>0 and int(n)==n and n>0: return zeros(n*m*2).reshape(m, n, 2)
+        else: raise 'TypeError. Dimensions should be positive integers.'
+    else: raise 'TypeError. Dimensions should be valid numbers.'
