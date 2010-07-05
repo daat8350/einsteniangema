@@ -5,3 +5,4 @@ syntax: glob
 *.pyc
 glob:Deflection/hist.txt
 glob:Deflection/a.txt
+glob:*.py.orig
