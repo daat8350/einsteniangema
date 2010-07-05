@@ -30,7 +30,7 @@ def read(x0, pic):                   #Eats an array and returns the correspondie
 
 def dist(a,b):
 #    if len(a)!=len(b): raise 'TypeError: should be list of the same length'     #We can assume that, for the shake of perfomance.
-    d=0
+    d=0.
     for i in xrange(len(a)):
        d+=(a[i]-b[i])**2
     return sqrt(d)
@@ -64,8 +64,8 @@ m=len(img)
 n=len(img[0])
 
 imgf=create.white(m, n)
-imgp=create.bi_container(m, n)     # Paralel, data container. Useful for luminance.
-
+imgp=create.bi_container(m, n)      # Paralel, data container. Useful for luminance.
+luminance=imgf                      # Luminance channel.
 
 
 # Parameters:
@@ -77,6 +77,7 @@ lenses=[[2,[301,314]]]   # [Schwarchild radius, (vector position, R^2)]
 distance=3000                 # Distance from 
 v=[]
 w=[]
+
 #Iterating:
 for i in xrange(m):
     for j in xrange (n):
@@ -88,11 +89,24 @@ for i in xrange(m):
 
         imgp[i][j]=pos
 
+# Luminance
+
+t1=time()
+print 'Image finished. Working on luminance.'
+for i in xrange(1,m-1):
+    for j in xrange (1,n-1):
+        a=imgp[i-1][j-1]
+        b=imgp[i-1][j+1]
+        c=imgp[i+1][j+1]
+        d=imgp[i+1][j-1]
+        area2=abs((a[0]*b[1]-b[0]*a[1])*(b[0]*c[1]-c[0]*b[1])*(c[0]*d[1]-d[0]*c[1])*(d[0]*a[1]-a[0]*a[1]))
+        luminance[i,j]=area2/8.0
 
 
 # Results
 
 plt.imshow(imgf).set_interpolation('nearest')
 print time()-t0
+print time()-t1
 
 #show() 
