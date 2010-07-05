@@ -2,7 +2,9 @@
 from __future__ import division
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-from numpy import array, dot, linalg
+import numpy as np
+import Image
+from numpy import array, dot, linalg, asarray
 from pylab import show, savefig
 from math import sqrt, tan, asin
 from time import time
@@ -28,11 +30,11 @@ def read(x0, pic):                   #Eats an array and returns the correspondie
     elif y>=n: return (1,0,1)
     else: return pic[x][y]
 
-def dist(a,b):
-#    if len(a)!=len(b): raise 'TypeError: should be list of the same length'     #We can assume that, for the shake of perfomance.
+def dist(pp,b):
+#    if len(pp)!=len(b): raise 'TypeError: should be list of the same length'     #We can assume that, for the shake of perfomance.
     d=0.
-    for i in xrange(len(a)):
-       d+=(a[i]-b[i])**2
+    for i in xrange(len(pp)):
+       d+=(pp[i]-b[i])**2
     return sqrt(d)
 
 def raytrace(obj0):
@@ -46,10 +48,10 @@ def raytrace(obj0):
                 break
             else:
                 sa=lens[0]/b
-                a=tan(asin(sa))
-                #a=sa/sqrt(1-sa**2)
+                pp=tan(asin(sa))
+                #pp=sa/sqrt(1-sa**2)
                 vdir=norm(array(lens[1])-array([i, j]))                      #Director vector.
-                obj+=a*distance*vdir
+                obj+=pp*distance*vdir
         if readable==True: return obj, True
 
 
@@ -66,6 +68,7 @@ n=len(img[0])
 imgf=create.white(m, n)
 imgp=create.bi_container(m, n)      # Paralel, data container. Useful for luminance.
 luminance=imgf                      # Luminance channel.
+luminance2=imgf
 
 
 # Parameters:
@@ -93,24 +96,40 @@ for i in xrange(m):
 
 t1=time()
 print 'Image finished. Working on luminance.'
-for i in xrange(1,m-1):
-    for j in xrange (1,n-1):
-        a=imgp[i-1][j-1]
-        b=imgp[i-1][j+1]
-        c=imgp[i+1][j+1]
-        d=imgp[i+1][j-1]
+pp=2                     #Promeding parameter
+for i in xrange(pp,m-pp):
+    for j in xrange (pp,n-pp):
+        a=imgp[i-pp][j-pp]
+        b=imgp[i-pp][j+pp]
+        c=imgp[i+pp][j+pp]
+        d=imgp[i+pp][j-pp]
         ac=c-a
         bd=d-b
         area2=abs(ac[0]*bd[1]-ac[1]*bd[0])
-        luminance[i,j]=area2/8.0
+        luminance[i,j]=area2/(16.0*pp**2)
 
-t2=time()
+#Pondering luminance
+pp=1                     #Promeding parameter
+for i in xrange(pp,m-pp):
+    for j in xrange (pp,n-pp):
+        a=luminance[i][j-pp]
+        b=luminance[i+pp][j]
+        c=luminance[i][j+pp]
+        d=luminance[i-pp][j]
+        e=luminance[i][j]
+
+        k=(e/2.0+(a+b+c+d)/8.0)
+        if k[0]>1: luminance2[i][j]=array([ 1.,  1.,  1.])
+        else: luminance2[i][j]=k
+
+t2=time()     
 
 # Results
-
-plt.imshow(luminance).set_interpolation('nearest')
-print 'Total time:', time()-t0, 's'
+#plt.imshow(luminance2).set_interpolation('nearest')
+plt.imshow(imgf).set_interpolation('nearest')
+tf=time()
+print 'Total time:', tf-t0, 's'
 print t1-t0, 's distorsing the image.'
 print t2-t1, 's on luminance.'
 
-#show() 
+show() 
