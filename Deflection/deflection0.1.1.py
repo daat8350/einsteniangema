@@ -92,26 +92,11 @@ for i in xrange(m):
 
         imgp[i][j]=pos
 
-# Luminance
 
 t1=time()
-print 'Image finished. Working on luminance.'
-pp=2                     #Promeding parameter
-for i in xrange(pp,m-pp):
-    for j in xrange (pp,n-pp):
-        a=imgp[i-pp][j-pp]
-        b=imgp[i-pp][j+pp]
-        c=imgp[i+pp][j+pp]
-        d=imgp[i+pp][j-pp]
-        ac=c-a
-        bd=d-b
-        area2=abs(ac[0]*bd[1]-ac[1]*bd[0])
-        luminance[i,j]=area2/(16.0*pp**2)
 
+#Results
 
-
-# Results
-#plt.imshow(luminance2).set_interpolation('nearest')
 plt.imshow(imgf).set_interpolation('nearest')
 tf=time()
 print 'Total time:', tf-t0, 's'
