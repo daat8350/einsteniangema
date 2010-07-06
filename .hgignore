@@ -6,3 +6,4 @@ syntax: glob
 glob:Deflection/hist.txt
 glob:Deflection/a.txt
 glob:*.py.orig
+glob:Thumbs.db
