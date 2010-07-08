@@ -39,7 +39,7 @@ def dist(pp,b):
        d+=(pp[i]-b[i])**2
     return sqrt(d)
 
-def raytrace(obj0, lenses, i, j):
+def raytrace(obj0, lenses, ii, jj):
         obj=obj0
         for lens in lenses:
             b=dist(obj,lens[1])
@@ -50,16 +50,16 @@ def raytrace(obj0, lenses, i, j):
                 sa=lens[0]/b
                 pp=tan(asin(sa))
                 #pp=sa/sqrt(1-sa**2)
-                vdir=norm(array(lens[1])-array([i, j]))                      #Director vector.
+                vdir=norm(array(lens[1])-array([ii, jj]))                      #Director vector.
                 obj+=pp*distance*vdir
                 return obj, True
 
 
-def a(image,lenses):
-    imgf=create.white(m, n)
+def a(image,lenses, mm, nn):
+    imgf=create.white(mm, nn)
     #Iterating:
-    for i in xrange(m):
-        for j in xrange (n):
+    for i in xrange(mm):
+        for j in xrange (nn):
             ob=array([i,j])
             pos, readable=raytrace(ob, lenses, i, j)
             if readable==True:
@@ -108,10 +108,10 @@ distance=50000                 # Distance from
 
 print 'Iterating...',
 
-last=99
+last=118
 for i in xrange(1, last): lensedb=movelenses(lensesdb)
 for it in xrange(last+1, top+1):
-    imgf=a(img, lensesdb)
+    imgf=a(img, lensesdb, m, n)
     exporter(imgf,'galmov', it)
     del(imgf)
     lensedb=movelenses(lensesdb)
