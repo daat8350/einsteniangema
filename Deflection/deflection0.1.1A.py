@@ -36,14 +36,12 @@ def dist(pp,b):
        d+=(pp[i]-b[i])**2
     return sqrt(d)
 
-def raytrace(obj0, lenses):
+def raytrace(obj0, lenses, i, j):
         obj=obj0
-        readable=True
         for lens in lenses:
             b=dist(obj,lens[1])
             if b<=lens[0]:
                 return obj0, False  # Ray eaten.
-                readable=False
                 break
             else:
                 sa=lens[0]/b
@@ -51,7 +49,8 @@ def raytrace(obj0, lenses):
                 #pp=sa/sqrt(1-sa**2)
                 vdir=norm(array(lens[1])-array([i, j]))                      #Director vector.
                 obj+=pp*distance*vdir
-        if readable==True: return obj, True
+                return obj, True
+
 
 def a(lenses):
     imgf=create.white(m, n)
@@ -59,7 +58,7 @@ def a(lenses):
     for i in xrange(m):
         for j in xrange (n):
             ob=array([i,j])
-            pos, readable=raytrace(ob, lenses)
+            pos, readable=raytrace(ob, lenses, i, j)
             if readable==True:
                  imgf[i][j]=read(pos, img)
             else:  imgf[i][j]=(1,1,0)
@@ -76,7 +75,7 @@ img=mpimg.imread('galaxy.png')
 m=len(img)
 n=len(img[0])
 
-imgf=create.white(m, n)
+#imgf=create.white(m, n)    # done inside a()
 
 # Parameters:
 
@@ -99,4 +98,4 @@ print 'Total time:', tf-t0, 's'
 print t1-t0, 's distorsing the image.'
 
 
-show() 
+#show() 
