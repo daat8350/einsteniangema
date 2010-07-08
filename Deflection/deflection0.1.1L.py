@@ -3,12 +3,11 @@ from __future__ import division
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
-import Image
 from numpy import array, dot, linalg, asarray
 from pylab import show, savefig
 from math import sqrt, tan, asin
 from time import time
-import create
+import create     # Requires v.1.1 or later
 import psyco
 
 
@@ -57,6 +56,7 @@ def raytrace(obj0):
 
 
 # Setup:
+print 'Starting.'
 psyco.full()
 t0=time()
 img=mpimg.imread('galaxy.png')
@@ -66,8 +66,8 @@ n=len(img[0])
 
 imgf=create.white(m, n)
 imgp=create.bi_container(m, n)      # Paralel, data container. Useful for luminance.
-luminance=imgf                      # Luminance channel.
-luminance2=imgf
+luminance=create.white(m, n)        # Luminance channel.
+
 
 
 # Parameters:
@@ -95,7 +95,7 @@ for i in xrange(m):
 
 t1=time()
 print 'Image finished. Working on luminance.'
-pp=2                     #Promeding parameter
+pp=10                     #Promeding parameter
 for i in xrange(pp,m-pp):
     for j in xrange (pp,n-pp):
         a=imgp[i-pp][j-pp]
@@ -105,30 +105,30 @@ for i in xrange(pp,m-pp):
         ac=c-a
         bd=d-b
         area2=abs(ac[0]*bd[1]-ac[1]*bd[0])
-        luminance[i,j]=area2/(16.0*pp**2)
+        luminance[i][j]=area2/(16.0*pp**2)
 
 #Pondering luminance
-pp=1                     #Promeding parameter
-for i in xrange(pp,m-pp):
-    for j in xrange (pp,n-pp):
-        a=luminance[i][j-pp]
-        b=luminance[i+pp][j]
-        c=luminance[i][j+pp]
-        d=luminance[i-pp][j]
-        e=luminance[i][j]
-
-        k=(e/2.0+(a+b+c+d)/8.0)
-        if k[0]>1: luminance2[i][j]=array([ 1.,  1.,  1.])
-        else: luminance2[i][j]=k
+pp=10                     #Promeding parameter
+##for i in xrange(pp,m-pp):
+##    for j in xrange (pp,n-pp):
+##        a=luminance[i][j-pp]
+##        b=luminance[i+pp][j]
+##        c=luminance[i][j+pp]
+##        d=luminance[i-pp][j]
+##        e=luminance[i][j]
+##
+##        k=(e/2.0+(a+b+c+d)/8.0)
+##        if k[0]>1: luminance2[i][j]=array([ 1.,  1.,  1.])
+##        else: luminance2[i][j]=k
 
 t2=time()     
 
 # Results
-#plt.imshow(luminance2).set_interpolation('nearest')
-plt.imshow(imgf).set_interpolation('nearest')
+plt.imshow(luminance).set_interpolation('nearest')
+#plt.imshow(imgf).set_interpolation('nearest')
 tf=time()
 print 'Total time:', tf-t0, 's'
 print t1-t0, 's distorsing the image.'
 print t2-t1, 's on luminance.'
 
-show() 
+#show() 
