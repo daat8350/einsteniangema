@@ -74,6 +74,7 @@ def exporter(image, head, filecode, format='.png', digits=5, interpolation='near
     '  digits: how many digits should the code have. Beware of upper limits!'
     plt.imshow(image).set_interpolation(interpolation)
     savefig(head+str(filecode).zfill(digits)+format)
+    plt.clf()
     del(image)
     gc.collect()                # Garbage collector, for preventing memory leaks.
 
@@ -108,8 +109,8 @@ distance=50000                 # Distance from
 
 print 'Iterating...',
 
-last=118
-for i in xrange(1, last): lensedb=movelenses(lensesdb)
+last=206
+if last!=0: for i in xrange(1, last): lensedb=movelenses(lensesdb)
 for it in xrange(last+1, top+1):
     imgf=a(img, lensesdb, m, n)
     exporter(imgf,'galmov', it)
@@ -127,7 +128,7 @@ t1=time()
 #plt.imshow(imgf).set_interpolation('nearest')
 tf=time()
 print 'Total time:', tf-t0, 's'
-print 'Mean of', (t1-t0)/top, 's per image.'
+print 'Mean of', (t1-t0)/(top-last), 's per image.'
 
 
 #show() 
