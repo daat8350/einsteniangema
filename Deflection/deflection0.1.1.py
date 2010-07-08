@@ -38,12 +38,10 @@ def dist(pp,b):
 
 def raytrace(obj0):
         obj=obj0
-        readable=True
         for lens in lenses:
             b=dist(obj,lens[1])
             if b<=lens[0]:
-                return obj0, False  # Ray eaten.
-                readable=False
+                return obj0, False  # Ray eaten. Readable: False
                 break
             else:
                 sa=lens[0]/b
@@ -51,7 +49,7 @@ def raytrace(obj0):
                 #pp=sa/sqrt(1-sa**2)
                 vdir=norm(array(lens[1])-array([i, j]))                      #Director vector.
                 obj+=pp*distance*vdir
-        if readable==True: return obj, True
+                return obj, True   # Readable: True
 
 
 # Setup:
