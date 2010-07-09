@@ -81,7 +81,7 @@ def exporter(image, head, filecode, format='.png', digits=5, interpolation='near
 def movelenses(lenses):
     'A function to move the lenses through the image.'
     for lens in lenses:
-        lens[1]=lens[1]+array([7, 14])
+        lens[1]=lens[1]+array([1.5, 3])
     return lenses
 
 
@@ -114,7 +114,7 @@ if last!=0:
     for i in xrange(1, last): lensedb=movelenses(lensesdb)
 for it in xrange(last+1, top+1):
     imgf=a(img, lensesdb, m, n)
-    exporter(imgf,'hubble', it)
+    exporter(imgf,'hubbledf', it)
     del(imgf)
     lensedb=movelenses(lensesdb)
     print it,
