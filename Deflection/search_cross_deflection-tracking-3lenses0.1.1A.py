@@ -127,7 +127,7 @@ for it in xrange(last+1, top+1):
     central=lensesdb[2][1]
     imgf, imgfb=a(img, lensesdb, central)
     exporter(imgf,'ROI_3\cross_track3_', it)
-    exporter(imgfb, 'ROI_3\black\crossblack_track3_', it)
+    exporter(imgfb, 'ROI_3black\crossblack_track3_', it)
     del(imgf)
     del(imgfb)
     lensedb=movelenses(lensesdb)

@@ -102,7 +102,7 @@ print 'Starting.'
 psyco.full()
 t0=time()
 img=mpimg.imread('hdf_l.png')
-top=500
+top=90
 
 m=len(img)
 n=len(img[0])
@@ -111,13 +111,13 @@ n=len(img[0])
 
 # Parameters:
 
-lensesdb=[[0.1,[500.3,500.5]], [0.1,[500.3,505.5]], [0.07,[498.9,503.5]],[0.07,[501.5,503.5]]]
+lensesdb=[[0.1,[500.3,500.5]], [0.1,[500.3,505.5]],[0.1,[500.3,510.5]], [0.07,[497.9,505.5]],[0.07,[502.5,505.5]]]
 
 distance=50000                 # Distance from 
 
 print 'Iterating...',
 
-last=59
+last=0
 if last!=0:
     for i in xrange(1, last): lensedb=movelenses(lensesdb)
 for it in xrange(last+1, top+1):
