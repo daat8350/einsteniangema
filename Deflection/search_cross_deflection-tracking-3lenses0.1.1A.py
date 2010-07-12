@@ -120,14 +120,14 @@ distance=50000                 # Distance from
 
 print 'Iterating...',
 
-last=0
+last=3
 if last!=0:
     for i in xrange(1, last): lensedb=movelenses(lensesdb)
 for it in xrange(last+1, top+1):
-    central=lensesdb[3][1]
+    central=lensesdb[2][1]
     imgf, imgfb=a(img, lensesdb, central)
-    exporter(imgf,'cross_track3_', it)
-    exporter(imgfb, 'crossblack_track3_', it)
+    exporter(imgf,'ROI_3\cross_track3_', it)
+    exporter(imgfb, 'ROI_3\black\crossblack_track3_', it)
     del(imgf)
     del(imgfb)
     lensedb=movelenses(lensesdb)
