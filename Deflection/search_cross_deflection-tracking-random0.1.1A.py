@@ -141,7 +141,7 @@ print 'Starting.'
 psyco.full()
 t0=time()
 img=mpimg.imread('hdf_l.png')
-top=90
+top=900
 
 m=len(img)
 n=len(img[0])
@@ -152,8 +152,8 @@ n=len(img[0])
 #lensesdb=[[0.1,[500.3,500.5]], [0.1,[500.3,505.5]],[0.1,[500.3,510.5]], [0.07,[497.9,505.5]],[0.07,[502.5,505.5]]]
 lensesdb=[[0.1,[500.3,500.5]], [0.2,[500.3,508.5]],[0.1,[500.3,516.5]]]
 
-directory='random'
-textfilename=directory+'\lensesfile.txt'
+
+textfilename='randomlensesfile.txt'
 dir1='random_'
 dir2='randomblack_'
 dir3='randomraw_'
